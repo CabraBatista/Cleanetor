@@ -3,6 +3,7 @@ import pathlib
 import sys
 import textwrap
 
+import os
 from PyQt6.QtGui import QIcon, QAction
 from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import (
@@ -18,6 +19,7 @@ from PyQt6.QtWidgets import (
     QVBoxLayout,
     QHBoxLayout,
     QLineEdit, 
+
 )
 
 
@@ -53,18 +55,20 @@ class MainPanel(QWidget):
         self.label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         layoutH1.addWidget(self.label3)
 
-        self.label4 = QLabel("4" )
-        self.label.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        layoutH2.addWidget(self.label4)
+        self.button1 = QPushButton("Elegir Directorio")
+        self.button1.clicked.connect(self.main_window.on_open)
+        layoutH2.addWidget(self.button1)
 
-        self.label5  = QLabel("5" )
-        self.label.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        layoutH2.addWidget(self.label5)
+        self.button2 = QPushButton("Empezar")
+        self.button2.clicked.connect(self.main_window.Archivos)
+        layoutH2.addWidget(self.button2)
         
 
         #button = QPushButton("Abrir Directorio")
         #button.clicked.connect(self.main_window.on_open)
         #layout.addWidget(button)
+
+
 
 class Window(QMainWindow):
     """Ventana principal."""
@@ -124,14 +128,15 @@ class Window(QMainWindow):
         """Abre un nuevo archivo de datos y refresca el widget principal."""
         self.set_status("Abriendo archivo con datos")
 
+
         # abrimos un diálogo para que se seleccione un archivo
-        dirpath = QFileDialog.getExistingDirectory(self, "Abrir archivo")
-        print("============dirpath",repr(dirpath))
-        if not dirpath:
+        self.dirpath = QFileDialog.getExistingDirectory(self, "Abrir archivo")
+        print("============dirpath",repr(self.dirpath))
+        if not self.dirpath:
             self.set_status("Ningún archivo seleccionado")
             return
         
-        self.main_panel.label.setText("Directorio:" + dirpath)
+        self.main_panel.label.setText("Directorio:" + self.dirpath)
 
         
 
@@ -140,13 +145,34 @@ class Window(QMainWindow):
         """Muestra el diálogo de Acerca de."""
         title = "AplicacionParaMami"
         text = textwrap.dedent("""
-            Ejemplo de aplicación gráfica para el libro
-            Python en Ámbitos Científicos
-            de Facundo Batista y Manuel Carlevaro
-
-            http://pyciencia.taniquetil.com.ar/
+            Este coso es un coso que hice para mi mamá y no
+            se que coso hace este coso
         """)
         QMessageBox.about(self, title, text)
+
+    def Archivos(self):
+        #if os.path.isfile(self.dirpath) == True:
+        entradas = os.listdir(self.dirpath)
+        print("===Cosas que tiene===",entradas,"---")
+
+        for archivo in entradas:
+            try:
+                path_entradas=int(entradas)
+                print("===Path Entradas",path_entradas,"===")
+                filepath = os.path.join(self.dirpath, archivo)
+                if os.path.isfile(filepath) == True:    
+                    entradas_info = os.stat(filepath)
+                    print(entradas_info)
+                    print("===Tamaño===",entradas_info.st_size)
+                else:
+                    print("Nop")
+
+            except:
+                print("Hubo un problema")
+
+            
+
+        
 
 
 app = QApplication(sys.argv)
