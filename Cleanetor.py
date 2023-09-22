@@ -51,9 +51,9 @@ class MainPanel(QWidget):
         self.label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         layoutH1.addWidget(self.label2)
         
-        self.label3 = QLineEdit(self)
+        self.edit = QLineEdit(self)
         self.label.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        layoutH1.addWidget(self.label3)
+        layoutH1.addWidget(self.edit)
 
         self.button1 = QPushButton("Elegir Directorio")
         self.button1.clicked.connect(self.main_window.on_open)
@@ -157,8 +157,8 @@ class Window(QMainWindow):
 
         for archivo in entradas:
             try:
-                path_entradas=int(self.main_panel.label3)
-                print("===Path Entradas",self.main_panel.label3,"===")
+                path_entradas=int(self.main_panel.edit)
+                print("===Path Entradas",self.main_panel.edit,"===")
                 filepath = os.path.join(self.dirpath, archivo)
                 if os.path.isfile(filepath) == True:    
                     entradas_info = os.stat(filepath)
