@@ -157,8 +157,8 @@ class Window(QMainWindow):
 
         for archivo in entradas:
             try:
-                path_entradas=int(entradas)
-                print("===Path Entradas",path_entradas,"===")
+                path_entradas=int(self.main_panel.label3)
+                print("===Path Entradas",self.main_panel.label3,"===")
                 filepath = os.path.join(self.dirpath, archivo)
                 if os.path.isfile(filepath) == True:    
                     entradas_info = os.stat(filepath)
