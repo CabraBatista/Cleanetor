@@ -151,19 +151,18 @@ class Window(QMainWindow):
         QMessageBox.about(self, title, text)
 
     def Archivos(self):
+        
+        max_archivo=int(self.main_panel.edit.text())
   
-        for path_archivos in os.walk(self.dirpath):
-            path,directorios,archive = path_archivos
+        for path,directorios,archive in os.walk(self.dirpath):
             for archivo in archive:
-                #try:
-                max_archivo=int(self.main_panel.edit.text())
-                print("===Path Entradas",self.main_panel.edit.text(),"===")
-                filepath = os.path.join(self.dirpath, archivo) 
+                #try:               
+                print("===Path Entradas",self.main_panel.edit.text(), "===")
+                filepath = os.path.join(path, archivo) 
                 entradas_info = os.stat(filepath)
                 print(entradas_info)
                 if entradas_info.st_size > max_archivo:    
-                    print("===Tamaño===",entradas_info.st_size)
-                    print(path,"-",directorios,"-",archive)
+                    print("===Tamaño===", entradas_info.st_size, filepath)
                 else:
                     print("Todo en orden")
 
