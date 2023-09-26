@@ -143,10 +143,10 @@ class Window(QMainWindow):
 
     def on_about(self):
         """Muestra el diálogo de Acerca de."""
-        title = "AplicacionParaMami"
+        title = "Cleanetor"
         text = textwrap.dedent("""
             Este coso es un coso que hice para mi mamá y no
-            se que coso hace este coso
+            se que cosa hace este coso
         """)
         QMessageBox.about(self, title, text)
 
