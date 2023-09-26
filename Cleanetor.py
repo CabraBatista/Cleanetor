@@ -151,27 +151,27 @@ class Window(QMainWindow):
         QMessageBox.about(self, title, text)
 
     def Archivos(self):
-        #if os.path.isfile(self.dirpath) == True:
-        entradas = os.listdir(self.dirpath)
-        print("===Cosas que tiene===",entradas,"---")
-
-        for archivo in entradas:
-            #try:
-                max_archivo=int(self.main_panel.edit.text())
-                print("===Path Entradas",self.main_panel.edit.text(),"===")
-                filepath = os.path.join(self.dirpath, archivo)
-                if os.path.isfile(filepath) == True:    
-                    entradas_info = os.stat(filepath)
-                    print(entradas_info)
-                    if entradas_info.st_size > max_archivo:    
-                        print("===Tamaño===",entradas_info.st_size)
+  
+        for path_archivos in os.walk(self.dirpath):
+            path,directorios,archive = path_archivos
+            for archivo in archive:
+                #try:
+                    max_archivo=int(self.main_panel.edit.text())
+                    print("===Path Entradas",self.main_panel.edit.text(),"===")
+                    filepath = os.path.join(self.dirpath, archivo)
+                    if os.path.isfile(filepath) == True:    
+                        entradas_info = os.stat(filepath)
+                        print(entradas_info)
+                        if entradas_info.st_size > max_archivo:    
+                            print("===Tamaño===",entradas_info.st_size)
+                            print(path,"-",directorios,"-",archive)
+                        else:
+                            print("Todo en orden")
                     else:
-                        print("Todo en orden")
-                else:
-                    print("Nop")
+                        print("Nop")
 
-            #except:
-            #    print("Hubo un problema")
+                #except:
+                #    print("Hubo un problema")
 
             
 
